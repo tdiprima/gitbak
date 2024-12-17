@@ -10,6 +10,8 @@ Keep the three most current, pop off the oldest.
 
 Use `backup-github.sh` and change `GHBU_UNAME` to your GitHub username, `GHBU_PASSWD` to your password, and `GHBU_ORG` to your organization.
 
+_I'm assuming now you'd have to use an API key instead of username/password._
+
 ## SSH Key
 
 It is necessary to set up an SSH key to connect to GitHub.
