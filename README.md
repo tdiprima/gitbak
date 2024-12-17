@@ -1,6 +1,6 @@
 # GitHub Backup
 
-Back up all SBU-BMI repositories.
+Back up all your repositories.
 
 (I believe I modified it from this one: https://github.com/tango-controls/GitHubBackup/blob/master/backup-github.sh.  Or you could check [The complete list of every GitHub backup script](https://rewind.com/blog/every-github-backup-script-complete-list/) 😄)
 
@@ -8,7 +8,7 @@ Keep the three most current, pop off the oldest.
 
 ## Usage
 
-Use `backup-github.sh` and change `GHBU_UNAME` to your GitHub username and `GHBU_PASSWD` to your password.
+Use `backup-github.sh` and change `GHBU_UNAME` to your GitHub username, `GHBU_PASSWD` to your password, and `GHBU_ORG` to your organization.
 
 ## SSH Key
 

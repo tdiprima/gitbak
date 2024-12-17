@@ -4,7 +4,7 @@
 dir_tstamp=$(date +%Y-%m-%d_%H-%M-%S)
 GHBU_BACKUP_DIR=${dir_tstamp}                                        # where to place the backup files
 GHBU_ORG_TYPE=${GHBU_ORG_TYPE-"orgs"}                                # are you doing an organization or a user (orgs | users)
-GHBU_ORG=${GHBU_ORG-"SBU-BMI"}                                       # the GitHub organization (or GitHub username) whose repos will be backed up
+GHBU_ORG=${GHBU_ORG-""}                                       # the GitHub organization (or GitHub username) whose repos will be backed up
 GHBU_UNAME=${GHBU_UNAME-""}                                          # the username of a GitHub account (to use with the GitHub API)
 GHBU_PASSWD=${GHBU_PASSWD-""}                                        # the password for that account
 GHBU_GITHOST=${GHBU_GITHOST-"github.com"}                            # the GitHub hostname (see notes)
