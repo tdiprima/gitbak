@@ -2,6 +2,8 @@
 
 Back up all SBU-BMI repositories.
 
+(I believe I modified it from this one: https://github.com/tango-controls/GitHubBackup/blob/master/backup-github.sh.  Or you could check [The complete list of every GitHub backup script](https://rewind.com/blog/every-github-backup-script-complete-list/) 😄)
+
 Keep the three most current, pop off the oldest.
 
 ## Usage
