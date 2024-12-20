@@ -2,15 +2,21 @@
 
 Back up all your repositories.
 
-(I believe I modified it from this one: https://github.com/tango-controls/GitHubBackup/blob/master/backup-github.sh.  Or you could check [The complete list of every GitHub backup script](https://rewind.com/blog/every-github-backup-script-complete-list/) 😄)
+(I believe I modified it from [this script](https://github.com/tango-controls/GitHubBackup/blob/master/backup-github.sh).  Or you could check [The complete list of every GitHub backup script](https://rewind.com/blog/every-github-backup-script-complete-list/) 😄)
 
-Keep the three most current, pop off the oldest.
+The script has a mechanism to prune old backups based on their age.  It prunes files older than a specified number of days (`GHBU_PRUNE_AFTER_N_DAYS`).
 
 ## Usage
 
-Use `backup-github.sh` and change `GHBU_UNAME` to your GitHub username, `GHBU_PASSWD` to your password, and `GHBU_ORG` to your organization.
+Use `./backup-github.sh`
 
-_I'm assuming now you'd have to use an API key instead of username/password._
+Switch to the correct endpoint for users or organizations:
+
+`GHBU_ORG_TYPE=${GHBU_ORG_TYPE-"users | orgs"}`
+
+Export your github token:
+
+`export GHBU_TOKEN=your_github_token_here`
 
 ## SSH Key
 

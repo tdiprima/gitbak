@@ -1,12 +1,16 @@
 #!/usr/bin/env bash
 # A simple script to backup an organization's GitHub repositories.
 
+# set -euo pipefail # error handling
+
 dir_tstamp=$(date +%Y-%m-%d_%H-%M-%S)
 GHBU_BACKUP_DIR=${dir_tstamp}                                        # where to place the backup files
-GHBU_ORG_TYPE=${GHBU_ORG_TYPE-"orgs"}                                # are you doing an organization or a user (orgs | users)
-GHBU_ORG=${GHBU_ORG-""}                                       # the GitHub organization (or GitHub username) whose repos will be backed up
-GHBU_UNAME=${GHBU_UNAME-""}                                          # the username of a GitHub account (to use with the GitHub API)
-GHBU_PASSWD=${GHBU_PASSWD-""}                                        # the password for that account
+# TODO: Switch to the correct endpoint for users or organizations
+# GHBU_ORG_TYPE=${GHBU_ORG_TYPE-"orgs"}                              # are you doing an organization or a user (orgs | users)
+GHBU_ORG_TYPE="users"
+GHBU_ORG=${GHBU_ORG-""}                                              # the GitHub organization (or GitHub username) whose repos will be backed up
+# TODO: export GHBU_TOKEN=your_github_token_here
+# GHBU_TOKEN=${GHBU_TOKEN-""}                                        # GitHub Personal Access Token
 GHBU_GITHOST=${GHBU_GITHOST-"github.com"}                            # the GitHub hostname (see notes)
 GHBU_PRUNE_OLD=${GHBU_PRUNE_OLD-true}                                # when `true`, old backups will be deleted
 GHBU_PRUNE_AFTER_N_DAYS=${GHBU_PRUNE_AFTER_N_DAYS-3}                 # the min age (in days) of backup files to delete
@@ -50,18 +54,20 @@ $GHBU_SILENT || echo "Fetching list of repositories for ${GHBU_ORG}..."
 # returned by GitHub one page at a time.
 # Cycling through pages:
 PAGE=0
+REPOLIST=""
 while true; do
   let PAGE++
   $GHBU_SILENT || echo "getting page ${PAGE}"
-  REPOLIST_TMP=$(check curl --silent -u "$GHBU_UNAME:$GHBU_PASSWD" "${GHBU_API}/${GHBU_ORG_TYPE}/${GHBU_ORG}/repos?page=${PAGE}&per_page=90" -q -k | grep "\"name\"" | awk -F': "' '{print $2}' | sed -e 's/",//g')
-  if [ -z "${REPOLIST_TMP}" ]; then break; fi
+  REPOLIST_TMP=$(check curl --silent -H "Authorization: token $GHBU_TOKEN" \
+    "${GHBU_API}/${GHBU_ORG_TYPE}/${GHBU_ORG}/repos?page=${PAGE}&per_page=90" \
+    | jq -r '.[].name')
+  if [ -z "$REPOLIST_TMP" ]; then break; fi
   REPOLIST="${REPOLIST} ${REPOLIST_TMP}"
 done
 
 list_count=$(echo "$REPOLIST" | wc -w)
 list_count="$(echo -e "${list_count}" | tr -d '[:space:]')"
 $GHBU_SILENT || echo "found $list_count repositories."
-
 
 $GHBU_SILENT || (echo "" && echo "=== BACKING UP ===" && echo "")
 
@@ -85,7 +91,8 @@ for REPO in $REPOLIST; do
    sleep 5
 
    $GHBU_SILENT || echo "Backing up ${GHBU_ORG}/${REPO} issues"
-   check curl --silent -u $GHBU_UNAME:$GHBU_PASSWD ${GHBU_API}/repos/${GHBU_ORG}/${REPO}/issues -q > ${GHBU_BACKUP_DIR}/${GHBU_ORG}-${REPO}.issues-${TSTAMP}.json && tgz ${GHBU_BACKUP_DIR}/${GHBU_ORG}-${REPO}.issues-${TSTAMP}.json
+   check curl --silent -H "Authorization: token $GHBU_TOKEN" \
+    "${GHBU_API}/repos/${GHBU_ORG}/${REPO}/issues" -q > ${GHBU_BACKUP_DIR}/${GHBU_ORG}-${REPO}.issues-${TSTAMP}.json && tgz ${GHBU_BACKUP_DIR}/${GHBU_ORG}-${REPO}.issues-${TSTAMP}.json
    sleep 5
 done
 
