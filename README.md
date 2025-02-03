@@ -2,7 +2,7 @@
 
 Back up all your repositories.
 
-(I believe I modified it from [this script](https://github.com/tango-controls/GitHubBackup/blob/master/backup-github.sh).  Or you could check [The complete list of every GitHub backup script](https://rewind.com/blog/every-github-backup-script-complete-list/) 😄)
+(I believe I modified backup-github.sh from [this script](https://github.com/tango-controls/GitHubBackup/blob/master/backup-github.sh).  Or you could check [The complete list of every GitHub backup script](https://rewind.com/blog/every-github-backup-script-complete-list/) 😄)
 
 The script has a mechanism to prune old backups based on their age.  It prunes files older than a specified number of days (`GHBU_PRUNE_AFTER_N_DAYS`).
 
