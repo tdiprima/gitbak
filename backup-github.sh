@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # A simple script to backup an organization's GitHub repositories.
+# Updated for modern usage by tdiprima
 
 # set -euo pipefail # error handling
 
