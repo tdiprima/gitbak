@@ -1,7 +1,8 @@
 #!/bin/bash
 
 #
-# Print list of files for weekly comparison
+# Description: Print list of files for weekly comparison
+# Author: tdiprima
 #
 
 a=$(pwd)
